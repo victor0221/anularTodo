@@ -1,0 +1,49 @@
+<div class="container">
+    <h4 class="text-center mb-4 display-4">To Do's</h4>
+    <form (ngSubmit)="onSubmit(taskForm)" #taskForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" aria-describedby="name" placeholder="Enter name" ngModel name="name">
+        </div>
+        <div class="form-group">
+            <label for="due">Due:</label>
+            <input type="date" class="form-control" id="due" aria-describedby="due" placeholder="Enter due date" ngModel name="due">
+          </div>
+        <button type="submit" class="btn btn-primary">Add Todo</button>
+    </form>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">UID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Due</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let t of taskArray; let i = index">
+              <tr>
+                <th scope="row">{{ t.id }}</th>
+                <ng-container *ngIf="editIndex !== i; else editMode">
+                  <td>{{ t.name }}</td>
+                  <td>{{ t.due }}</td>
+                </ng-container>
+                <ng-template #editMode>
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="t.name">
+                  </td>
+                  <td>
+                    <input type="date" class="form-control" [(ngModel)]="t.due">
+                  </td>
+                </ng-template>
+                <td>
+                  <button class="btn btn-primary" (click)="editTask(i)" *ngIf="editIndex !== i">Edit</button>
+                  <button class="btn btn-success" (click)="saveTask(i)" *ngIf="editIndex === i">Save</button>
+                  <button class="btn btn-danger" (click)="cancelEdit()" *ngIf="editIndex === i">Cancel</button>
+                  <button class="btn btn-danger" (click)="deleteTask(i)">Delete</button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+    </table>
+</div>
