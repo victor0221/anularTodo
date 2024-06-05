@@ -1,2 +1,2 @@
 # Anular Todo
-Angular + Bootstrap ToDo frontend
+Angular 17 + Bootstrap
